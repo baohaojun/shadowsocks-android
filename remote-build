@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+mkdir -p ~/tmp/shadowsocks
+rsync * ~/tmp/shadowsocks -avL
+
+(
+    cd ~/tmp/shadowsocks
+    ./build.sh
+    jdk-1.7 sbt android:package-release
+    adb install -r target/android-bin/shadowsocks-release.apk
+)
